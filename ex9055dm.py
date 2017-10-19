@@ -18,7 +18,7 @@ class EX9055DM(minimalmodbus.Instrument):
         self.address = address
 
         if settings.PRODUCTION:
-            minimalmodbus.Instrument.__init__(self, '/dev/ttyUSB0', address)
+            minimalmodbus.Instrument.__init__(self, settings.MODBUS_PORT, address)
             self.serial.timeout = 3.0  # sec
 
     def write_output(self, pin, value):
