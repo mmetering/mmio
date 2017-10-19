@@ -29,6 +29,8 @@ class ControlBoard(EX9055DM):
 
     def set_led(self, color):
         if color is 'green':
+            self.write_output(1, 0)
             self.write_output(0, 1)
         elif color is 'red':
+            self.write_output(0, 0)
             self.write_output(1, 1)
