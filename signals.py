@@ -14,7 +14,7 @@ class DummyRequest:
     GET = None
 
 
-def meterdata_post_save(*args, **kwargs):
+def meterdata_post_save_handler(*args, **kwargs):
     from mmio.controlboard import ControlBoard
     from mmetering.summaries import Overview
 
