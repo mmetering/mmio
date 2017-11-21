@@ -1,11 +1,6 @@
 import os
 import configparser
 import logging
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from mmetering.models import MeterData
-from mmetering.summaries import Overview
-from mmio.controlboard import ControlBoard
 from mmetering_server.settings import BASE_DIR
 
 
@@ -19,10 +14,11 @@ class DummyRequest:
     GET = None
 
 
-@receiver(post_save, sender=MeterData)
-def meterdata_post_save(sender, **kwargs):
-    io_address = config.getint('controlboard', 'address')
+def meterdata_post_save_handler(*args, **kwargs):
+    from mmio.controlboard import ControlBoard
+    from mmetering.summaries import Overview
 
+    io_address = config.getint('controlboard', 'address')
     logger.debug('Connecting to control board on address %i' % io_address)
 
     io_board = ControlBoard(io_address)
