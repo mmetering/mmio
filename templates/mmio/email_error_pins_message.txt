@@ -1,0 +1,3 @@
+Bei folgenden registrierten Meldern wurden Probleme festgestellt:
+
+{{issues}}
