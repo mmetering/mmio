@@ -1,21 +1,16 @@
 from mmio.ex9055dm import EX9055DM
 from django.conf import settings
+from mmio.models import NotificationPin
 
 
 class ControlBoard(EX9055DM):
     def __init__(self, address):
         if settings.PRODUCTION:
             EX9055DM.__init__(self, address)
-            self.issues = {
-              'Pumpensumpf': 0,
-              'Rückstauklappe Hausmeister': 1,
-              'Rückstauklappe Technikraum': 2,
-              'Rauchmelder Allgemein B10': 3,
-              'Rauchmelder Allgemein L06': 4,
-              'Rauchmelder Allgemein L08': 5,
-              'Hitzemelder Tiefgarage': 6,
-              'Gasheizung': 7
-            }
+
+            self.issues = {}
+            for k, v in NotificationPin.objects.all().values_list('name', 'pin'):
+                self.issues[k] = v
 
     def check_issues(self):
         if settings.PRODUCTION:
