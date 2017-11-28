@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.test.utils import override_settings
 from mmio.tasks import check_supply_task, check_input_pins_task
+from django.core import mail
 
 
 @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
@@ -14,3 +15,4 @@ class TasksTest(TestCase):
     def test_input_pins_task(self):
         check_input_pins = check_input_pins_task.delay()
         self.assertTrue(check_input_pins.successful())
+        self.assertEqual(len(mail.outbox), 0)
