@@ -22,10 +22,10 @@ class EX9055DM(minimalmodbus.Instrument):
             self.serial.timeout = 3.0  # sec
 
     def write_output(self, pin, value):
-        if value is 0 or 1:
+        if value == 0 or value == 1:
             self.write_bit(pin, value, functioncode=5)
         else:
-            raise ValueError('Output value can only be 0 or 1 (int)')
+            raise ValueError('Output value can only be either 0 or 1.')
 
     def read_output(self, pin):
         return self.read_bit(pin, functioncode=1)
