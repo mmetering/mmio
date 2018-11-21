@@ -19,11 +19,11 @@ class DummyRequest:
 
 
 def supply_threshold_handler(*args, **kwargs):
-    io_address = config.getint('controlboard', 'address')
+    io_address = config.getint('mmio', 'address')
     logger.debug('Connecting to control board on address %i' % io_address)
 
     io_board = ControlBoard(io_address)
-    threshold = config.getint('controlboard', 'supply-threshold') / 100
+    threshold = config.getint('mmio', 'supply-threshold') / 100
 
     # after each signal, check if at least 70% of energy
     # supply are produced by BHKW and PV
@@ -38,7 +38,7 @@ def supply_threshold_handler(*args, **kwargs):
 
 
 def check_input_pins_handler():
-    io_address = config.getint('controlboard', 'address')
+    io_address = config.getint('mmio', 'address')
     io_board = ControlBoard(io_address)
 
     issues = io_board.check_issues()

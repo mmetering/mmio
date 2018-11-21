@@ -10,7 +10,7 @@ in percent which is used in order to decide if the LED in each flat lights red o
 less current is being produced by the solar panels and the BHKW than being fed from the outside.
 
 ```
-[controlboard]
+[mmio]
 address = 200
 supply-threshold = 70
 ```
