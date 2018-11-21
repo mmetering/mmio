@@ -1,11 +1,13 @@
 # Created by https://www.gitignore.io/api/python,django,pycharm,virtualenv,vim
 
+### Own ###
+migrations/
+scripter.py
+
 ### Celery ###
 celerybeat-schedule.db
 celerybeat.pid
 dump.rdb
-
-__pycache__/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
