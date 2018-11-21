@@ -31,18 +31,32 @@ def supply_threshold_handler(*args, **kwargs):
 
     if data.is_supply_over_threshold(threshold):
         logger.debug("Over " + str(threshold) + "% of energy supply are produced by BHKW and PV")
-        io_board.set_led('green')
+
+        try:
+            io_board.set_led('green')
+        except (IOError, ValueError) as e:
+            logger.error("Couldn't reach IO module on address %d." % io_address)
     else:
         logger.debug("Under " + str(threshold) + "% of energy supply are produced by BHKW and PV")
-        io_board.set_led('red')
+
+        try:
+            io_board.set_led('red')
+        except (IOError, ValueError) as e:
+            logger.error("Couldn't reach IO module on address %d." % io_address)
 
 
 def check_input_pins_handler():
     io_address = config.getint('mmio', 'address')
     io_board = ControlBoard(io_address)
+    issues = []
 
-    issues = io_board.check_issues()
-    if issues:
+    try:
+        issues = io_board.check_issues()
+    except (IOError, ValueError) as e:
+        # Exceptions which can be raised by minimalmodbus.
+        logger.error("Couldn't reach IO module on address %d." % io_address)
+
+    if len(issues) is not 0:
         issues = '\n'.join(issues)
         context = Context({'issues': issues})
         message = render_to_string('mmio/email_error_pins_message.txt', context)
