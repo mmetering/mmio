@@ -17,9 +17,8 @@ class EX9055DM(minimalmodbus.Instrument):
     def __init__(self, address):
         self.address = address
 
-        if settings.PRODUCTION:
-            minimalmodbus.Instrument.__init__(self, settings.MODBUS_PORT, address)
-            self.serial.timeout = 3.0  # sec
+        minimalmodbus.Instrument.__init__(self, settings.MODBUS_PORT, address)
+        self.serial.timeout = 3.0  # sec
 
     def write_output(self, pin, value):
         if value == 0 or value == 1:
