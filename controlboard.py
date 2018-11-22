@@ -13,8 +13,8 @@ class ControlBoard(EX9055DM):
     def check_pins(self):
         pin_states = {}
         for pin, name in self.pins.items():
-            input_status = self.read_input(pin)
-            pin_states[pin] = input_status
+            input_state = self.read_input(pin)
+            pin_states[pin] = input_state
 
         return pin_states
 
