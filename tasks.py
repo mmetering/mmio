@@ -43,7 +43,7 @@ def check_supply_task():
 
 
 @periodic_task(
-    run_every=timedelta(seconds=60),
+    run_every=timedelta(seconds=82),
     name='check_input_pins_task',
     ignore_result=True
 )

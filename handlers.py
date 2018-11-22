@@ -8,6 +8,7 @@ from mmetering.tasks import send_system_email_task
 from django.template import Context
 from django.template.loader import render_to_string
 from mmio.models import NotificationPin
+from tenacity import *
 
 config = configparser.RawConfigParser()
 config.read(os.path.join(BASE_DIR, 'my.cnf'))
@@ -46,6 +47,10 @@ def supply_threshold_handler(*args, **kwargs):
             logger.exception("Couldn't reach IO module on address %d." % io_address)
 
 
+@retry(
+    wait=wait_random_exponential(multiplier=0.2, max=8),
+    stop=stop_after_delay(30),
+)
 def check_input_pins_handler():
     io_address = config.getint('mmio', 'address')
     io_board = ControlBoard(io_address)
