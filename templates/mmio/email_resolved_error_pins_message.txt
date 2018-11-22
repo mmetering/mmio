@@ -1,0 +1,3 @@
+Folgende Probleme bei registrierten Meldern sind nun nicht mehr vorhanden:
+
+{{resolved_errors}}

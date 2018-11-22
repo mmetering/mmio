@@ -6,18 +6,17 @@ class ControlBoard(EX9055DM):
     def __init__(self, address):
         EX9055DM.__init__(self, address)
 
-        self.issues = {}
+        self.pins = {}
         for name, pin in NotificationPin.objects.all().values_list('name', 'pin'):
-            self.issues[name] = pin
+            self.pins[pin] = name
 
-    def check_issues(self):
-        found_issues = []
-        for name, pin in self.issues.items():
+    def check_pins(self):
+        pin_states = {}
+        for pin, name in self.pins.items():
             input_status = self.read_input(pin)
-            if input_status == 1:
-                found_issues.append(name)
+            pin_states[pin] = input_status
 
-        return found_issues
+        return pin_states
 
     def set_led(self, color):
         if color is 'green':
