@@ -3,6 +3,7 @@ from celery.schedules import crontab
 from celery.task import periodic_task
 from celery.signals import after_setup_task_logger
 from datetime import datetime, timedelta
+from time import sleep
 from mmio.handlers import supply_threshold_handler, check_input_pins_handler
 
 
@@ -31,11 +32,13 @@ after_setup_task_logger.connect(setup_logging)
 
 
 @periodic_task(
-    run_every=(crontab(minute='*/16')),
+    run_every=(crontab(minute='*/15')),
     name='check_supply_task',
     ignore_result=True
 )
 def check_supply_task():
+    # TODO: Quickfix: Remove asap
+    sleep(30)
     logger = check_supply_task.get_logger()
     logger.setLevel(logging.DEBUG)
 
@@ -43,11 +46,13 @@ def check_supply_task():
 
 
 @periodic_task(
-    run_every=timedelta(seconds=82),
+    run_every=timedelta(seconds=60),
     name='check_input_pins_task',
     ignore_result=True
 )
 def check_input_pins_task():
+    # TODO: Quickfix: Remove asap
+    sleep(40)
     logger = check_supply_task.get_logger()
     logger.setLevel(logging.DEBUG)
 
