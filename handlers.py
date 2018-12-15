@@ -20,6 +20,10 @@ class DummyRequest:
     GET = None
 
 
+@retry(
+    wait=wait_chain(*[wait_fixed(30)] + [wait_random_exponential(multiplier=0.2, max=8)]),
+    stop=stop_after_delay(59),
+)
 def supply_threshold_handler(*args, **kwargs):
     io_address = config.getint('mmio', 'address')
     logger.debug('Connecting to control board on address %i' % io_address)
@@ -49,7 +53,7 @@ def supply_threshold_handler(*args, **kwargs):
 
 @retry(
     wait=wait_random_exponential(multiplier=0.2, max=8),
-    stop=stop_after_delay(30),
+    stop=stop_after_delay(50),
 )
 def check_input_pins_handler():
     io_address = config.getint('mmio', 'address')

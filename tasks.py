@@ -37,8 +37,6 @@ after_setup_task_logger.connect(setup_logging)
     ignore_result=True
 )
 def check_supply_task():
-    # TODO: Quickfix: Remove asap
-    sleep(30)
     logger = check_supply_task.get_logger()
     logger.setLevel(logging.DEBUG)
 
@@ -51,8 +49,6 @@ def check_supply_task():
     ignore_result=True
 )
 def check_input_pins_task():
-    # TODO: Quickfix: Remove asap
-    sleep(40)
     logger = check_supply_task.get_logger()
     logger.setLevel(logging.DEBUG)
 
